@@ -34,7 +34,8 @@ pipeline {
             steps {
                 // Replace BUILD_NUMBER in deploy.yaml with actual tag
                 sh '''
-				     cd /root/
+				    kubectl delete -f deploy.yaml
+		            kubectl delete -f service.yaml
                     sed -i "s|BUILD_NUMBER|${BUILD_NUMBER}|g" deploy.yaml
                     kubectl apply -f deploy.yaml
                     kubectl apply -f service.yaml
