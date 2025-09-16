@@ -15,21 +15,19 @@ pipeline {
 		   steps {
 		      sh '''
 			  cp target/SpringBootExecutableJarFileDemo-0.0.1-SNAPSHOT.jar  .
-			  docker build -t myusername/myapp:${BUILD_NUMBER} .
+			  docker build -t rahulsgodase/myapp:${BUILD_NUMBER} .
 			  '''
 			  }
 			 }
 		  stage('s-3') {
 		   steps {
                 
-            
-            sh ''' 
-			       cd /root/
-			       echo $DOCKER_PSW | docker login -u $DOCKER_USR --password-stdin
-                   
-                   docker push myusername/myapp:${BUILD_NUMBER}
-				  
-				  '''
+           withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USR', passwordVariable: 'DOCKER_PSW')]) {
+                    sh '''
+                        echo $DOCKER_PSW | docker login -u $DOCKER_USR --password-stdin
+                        docker push rahulsgodase/myapp:${BUILD_NUMBER}
+                    '''
+                }
                  }
                }
 			  
