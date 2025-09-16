@@ -14,7 +14,7 @@ pipeline {
 	     stage('s-2') {
 		   steps {
 		      sh '''
-			  cp /target/SpringBootExecutableJarFileDemo-0.0.1-SNAPSHOT.jar  .
+			  cp target/SpringBootExecutableJarFileDemo-0.0.1-SNAPSHOT.jar  .
 			  docker build -t myusername/myapp:${BUILD_NUMBER} .
 			  '''
 			  }
